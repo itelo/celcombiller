@@ -39,7 +39,7 @@ def login():
         return "Hello, cross-origin-world!"
 
 def check_time():
-    if not current_user.is_admin():
+    if not current_user.is_admin:
         return False
     else:
         json_need_update = []
@@ -165,12 +165,12 @@ def auth(*args, **kargs):
     """
     Required API request to be authenticated
     """
-    if not current_user.is_authenticated():
+    if not current_user.is_authenticated:
         raise ProcessingException(description='Not authenticated', code=401)
 
 
 def preprocessor_check_adm(*args, **kargs):
-    if not current_user.is_admin():
+    if not current_user.is_admin:
         raise ProcessingException(description='Forbidden', code=403)
 
 
@@ -178,7 +178,7 @@ def preprocessors_patch(instance_id=None, data=None, **kargs):
     user_cant_change = ["admin", "clid", "id_",
                         "originated_calls", "received_calls, tunel"]
     admin_cant_change = ["id_", "originated_calls", "received_calls"]
-    if current_user.is_admin():
+    if current_user.is_admin:
         for x in data.keys():
             if x in admin_cant_change:
                 raise ProcessingException(description='Forbidden', code=403)
@@ -191,7 +191,7 @@ def preprocessors_patch(instance_id=None, data=None, **kargs):
 
 
 def preprocessors_check_adm_or_normal_user(instance_id=None, **kargs):
-    if not (current_user.is_admin() or current_user.username == instance_id):
+    if not (current_user.is_admin or current_user.username == instance_id):
         raise ProcessingException(description='Forbidden', code=403)
 
 manager = flask.ext.restless.APIManager(app, flask_sqlalchemy_db=db)
