@@ -95,6 +95,12 @@ update group
 curl -X PATCH -H "Content-Type: application/json" -d '{}' -s http://localost:5000/api/groups/group_name
 ```
 
+## Deployment With Docker
+
+```bash
+docker build -t celcom:1 .
+docker run -p 5000:5000 -d --name celcom celcom:1
+```
 
 ## Asterisk setup
 
