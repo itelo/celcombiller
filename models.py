@@ -71,7 +71,11 @@ class User(db.Model):
 
         return historic_list
 
+<<<<<<< Updated upstream
     def __init__(self , username ,password, clid,admin, imsi ):
+=======
+    def __init__(self , username ,password, clid, admin, imsi ):
+>>>>>>> Stashed changes
         self.username   = username
         self.password   = password
         self.clid       = clid

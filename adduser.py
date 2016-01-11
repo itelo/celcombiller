@@ -1,5 +1,5 @@
-from flask import Flask
-from flask.ext.sqlalchemy import SQLAlchemy
+# from flask import Flask
+# from flask.ext.sqlalchemy import SQLAlchemy
 from config import db
 from models import User, Ballance
 
