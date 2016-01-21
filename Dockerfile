@@ -5,10 +5,10 @@ MAINTAINER Itelo Filho (ixfh), itelofilho@gmail.com
 # Install celcombiller packages
 RUN pip install --allow-external pyst --allow-unverified pyst -r requirements.txt
 
-WORKDIR /home
+WORKDIR /home/celcombiller
 
 # Make everything available for start
-ADD . /home
+ADD . /home/celcombiller
 
 # Port 5000 for server
 EXPOSE 5000
