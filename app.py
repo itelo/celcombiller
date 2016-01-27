@@ -282,7 +282,8 @@ manager.create_api(
     exclude_columns=[
         'newUser',
         'removeUser',
-        'updateGroup'
+        'updateGroup',
+        'tunel.password'
     ],
     methods=['POST', 'GET', 'PATCH', 'DELETE'],
     results_per_page=100,
@@ -293,6 +294,7 @@ manager.create_api(
     Ballance,
     preprocessors={
         'POST': [
+            auth,
             preprocessor_check_adm,
             date_now
         ],
