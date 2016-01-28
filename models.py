@@ -1,5 +1,6 @@
 from config import db, app
 from sqlalchemy.ext.hybrid import hybrid_property, hybrid_method
+from sqlalchemy_utils import PasswordType
 from sqlalchemy.orm.session import object_session
 from sqlalchemy.dialects.postgresql import ENUM
 from datetime import *
@@ -27,11 +28,17 @@ class User(db.Model):
 
     id_         = db.Column(db.Integer, primary_key=True)
     username    = db.Column(db.Unicode, unique=True)
-    password    = db.Column(db.Integer)
-    clid        = db.Column(db.String(9), nullable=False, unique=True)
+    password    = db.Column(PasswordType(
+        schemes=[
+            'pbkdf2_sha512',
+            'md5_crypt'
+        ],
+        deprecated=['md5_crypt']
+    ))
+    clid        = db.Column(db.Integer, nullable=False, unique=True)
     admin       = db.Column(db.Boolean)
-    tunel       = db.relationship('Groups', secondary=tunel_table)
     imsi        = db.Column(db.Integer, unique=True)
+    tunel       = db.relationship('Groups', secondary=tunel_table)
 
     def is_admin(self):
         return self.admin

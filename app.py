@@ -11,6 +11,7 @@ from dateutil.relativedelta import *
 from flask_restless import ProcessingException
 from flask.ext.login import login_user , logout_user , current_user ,\
     login_required
+from passlib.hash import pbkdf2_sha512
 import json
 from openbts import to_openbts
 
@@ -27,16 +28,19 @@ def login():
     if request.method == 'GET':
         return render_template('login.html')
     else:
-        username = request.form['username']
+        clid = request.form['clid']
         password = request.form['password']
         registered_user = \
-            User.query.filter_by(username=username, password=password).first()
-        if registered_user is None:
-            flash('Username or Password is invalid', 'error')
+            User.query.filter_by(clid=clid).first()
+        if pbkdf2_sha512.verify(password, registered_user.password.hash) \
+            or registered_user is None:
+            print registered_user.password.hash
+            login_user(registered_user)
+            json_with_names = check_time()
+            return "Hello, cross-origin-world!"
+        else:
+            flash('Number or Password is invalid', 'error')
             return render_template('ERROR.html')
-        login_user(registered_user)
-        json_with_names = check_time()
-        return "Hello, cross-origin-world!"
 
 def check_time():
     if not current_user.is_admin:
@@ -231,7 +235,7 @@ manager.create_api(
     ],
     methods=['POST', 'GET', 'PATCH', 'DELETE'],
     allow_patch_many=True,
-    primary_key='username'
+    primary_key='clid'
 )
 
 manager.create_api(
