@@ -9,6 +9,7 @@ MarkupSafe==0.23
 mimerender==0.5.5
 passlib==1.6.5
 pyst==0.6.50
+pyst3==0.4.2
 python-dateutil==2.4.2
 python-mimeparse==0.1.4
 pyzmq==15.1.0
